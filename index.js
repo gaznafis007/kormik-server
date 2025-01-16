@@ -4,7 +4,7 @@ const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
 const http = require('http')
 const app = express();
-
+require('dotenv').config();
 
 
 // socket.io setup
@@ -23,7 +23,7 @@ app.use(cors({
 }));
 app.use(express.json());
 
-require('dotenv').config();
+
     app.get("/", (req,res) =>{
       res.send('Kormik server is initiated')
   })
@@ -55,6 +55,7 @@ async function run() {
     await client.connect();
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
+    console.log('MongoDB connected successfully!'); // Connection success message
     // MongoDB collections
     const reviewCollection = client.db("kormikDB").collection('reviews');
     const categoriesCollection = client.db('kormikDB').collection('categories');
@@ -324,4 +325,4 @@ app.listen(port, ()=>{
     console.log(`Kormik server is running on port: ${port}`)
 })
 
-module.exports = app; // Required for Vercel
+// module.exports = app; // Required for Vercel
